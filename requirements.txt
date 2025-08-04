@@ -1,5 +1,4 @@
 openai
 requests
 dotenv
-jupyter
-ipython
+beautifulsoup4
