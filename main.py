@@ -11,31 +11,57 @@ from config import (
     POEM_URL
 )
 
+
+
 def scrape_poem_of_the_day():
     """Scrape the current poem of the day from Poetry Foundation."""
-    response = requests.get(POEM_URL)
-    soup = BeautifulSoup(response.text)
-    title = soup.find('h4', {"class":"type-gamma"})
-    author = title.next_sibling.next_sibling.get_text()
-    poem_container = title.parent.next_sibling
-    poem_paragraphs = poem_container.find_all('p')
     
-    # Combine all poem paragraphs into a single text
+    resp = requests.get(POEM_URL)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+
+    # Get the container that contains the title, author, and poem
+    poem_container = soup.find('div', class_='col-span-full')
+    
+    # 1) Get the title
+    title_div = poem_container.find('h4', class_='type-gamma')
+    title = title_div.get_text(strip=True)
+    
+    # 2) Get the author
+    author_div = poem_container.find('div', class_='type-kappa')
+    
+    # Try to find the span containing the author name
+    author_span = author_div.find('span')
+    if author_span:
+        # Extract text from the span (which should contain just the author name)
+        author = author_span.get_text(strip=True)
+    else:
+        # Fallback: extract all text and remove "By" if present
+        author_text = author_div.get_text(strip=True)
+        if author_text.startswith('By '):
+            author = author_text[3:]  # Remove "By " prefix
+        else:
+            author = author_text
+      
+    # 3) Get the poem
+    lines_container =  title_div.parent.next_sibling
     poem_lines = []
-    for p in poem_paragraphs:
-        text = p.get_text().strip()
-        if text: 
-            poem_lines.append(text)
     
-    poem = '\n\n'.join(poem_lines)  # Join with double newlines to preserve stanza breaks
+    # depending on the poem, the lines container may be a div or a p. So we need to just iterate over them all. 
+    for child in lines_container.find_all(recursive=False):
+        text = child.get_text(strip=True)
+        if text:
+            poem_lines.append(text)
+
+    # join lines; add stanza breaks
+    poem = "\n\n".join(poem_lines)
     
     return {
-        'title': title.get_text(),
-        'author': author,
-        'poem': poem
+        "title": title,
+        "author": author,
+        "poem": poem
     }
-
-
+    
+    
 def query_openai(input_str):
     load_dotenv()
     api_key = os.getenv('OPENAI_API_KEY')    

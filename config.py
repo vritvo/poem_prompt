@@ -46,7 +46,7 @@ Provide a writing prompt about the following poem.
 It should contain a couple sentences (< 3) about the inspiration poem, as well as the prompt itself for a {genre}. 
 The sentences and prompt should riff off some aspect of the poem, whether it's the content, the emotions, the structure, the lyricism, the sonic quality etc--whatever seems to be the richest source for a creative writing prompt given this particular poem.
 The assignment result may not be exactly like the source-- the source poem is just inspiration.
-The Prompt should be appropriate for what you'd imagine a creative writing teacher would give. But keep your language straightforward, concise, and free from flowery language. Importantly, make sure not to overstep, and infer context you don't know to be true about the poem. Stick to what you can feel confident about in the poem, even if limited. And if you do refer to the poet, just refer to them as the "poet". If you do want to give an interpetation, you can say the poem *can* be read a certain way. For example: 
+The Prompt should be appropriate for what you'd imagine a creative writing teacher would give. But keep your language straightforward, concise, and free from flowery language. Importantly, make sure not to overstep, and infer context you don't know to be true about the poem. Stick to what you can feel confident about in the poem, even if limited. And if you do refer to the poet, just refer to them as the "poet", and refer to the speaker just as the "speaker". If you do want to give an interpetation, you can say the poem *can* be read a certain way. For example: 
 
 {example_poem1} 
 
