@@ -1,12 +1,8 @@
 # Poem Prompt Generator
 Generates a writing prompt based on a randomly selected poem. 
 
-# Why make this? 
-One good source of prompts for poems is other poems -- not to mimic the poem directly, but to use aspects of the content, emotions, structure, or sonic qualities to generate your own writing. This repo serves as a tool for generating these kinds of prompts using LLMs.
-
-
 # How does this work? 
-Gets a) a random poem from poems.db or b) the poem of the day from the Poetry Foundation, and then generates a prompt with openAI. 
+Gets a) a random poem from poems.db or b) the poem of the day from the Poetry Foundation, and then generates a prompt for a writing exercise with openAI. 
 
 # Example
 
@@ -37,13 +33,14 @@ I could not see to see -
 
 AI Output: 
 
+```
 The poet describes the moment of death, focusing not on grand emotions but on small, ordinary details—like the buzz of a fly interrupting solemn silence. The poem’s calm tone, vivid sounds, and ordinary interruptions create an unexpected contrast with the seriousness of death.
 
 Prompt: Write a poem about a moment that’s supposed to be important or dramatic, but let an everyday sensory detail—like a sound, a smell, or a small movement—break through and take over. Notice how this detail changes the mood or meaning of the moment.
+```
 
 
 # How to use
-* Set up virtual environment
-* `pip install -r requirements.txt`
+* `uv synv`
 * Set up an Open AI key and put it in a .env file, in the form `OPENAI_API_KEY=<key>`
-* Run `python main.py`
+* Run `uv run  main.py`
