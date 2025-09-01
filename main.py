@@ -1,22 +1,19 @@
 import os
 import requests
 import argparse
+import toml
 from dotenv import load_dotenv
 from openai import OpenAI
 from bs4 import BeautifulSoup
-from config import (
-    EXAMPLE_POEM_1,
-    EXAMPLE_POEM_2,
-    BASE_PROMPT_TEMPLATE,
-    OPENAI_MODEL,
-    POEM_URL,
-)
+
+# Load configuration
+config = toml.load("config.toml")
 
 
 def scrape_poem_of_the_day():
     """Scrape the current poem of the day from Poetry Foundation."""
 
-    resp = requests.get(POEM_URL)
+    resp = requests.get(config["general"]["poem_url"])
     soup = BeautifulSoup(resp.text, "html.parser")
 
     # Get the container that contains the title, author, and poem
@@ -62,7 +59,9 @@ def query_openai(input_str):
     load_dotenv()
     api_key = os.getenv("OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
-    response = client.responses.create(model=OPENAI_MODEL, input=input_str)
+    response = client.responses.create(
+        model=config["general"]["openai_model"], input=input_str
+    )
     return response
 
 
@@ -93,12 +92,12 @@ def generate_prompt(poem, genre="poem"):
     """Generate a prompt using the poem"""
     poem_text = _extract_poem_text(poem)
 
-    return BASE_PROMPT_TEMPLATE.format(
+    return config["prompts"]["base_template"].format(
         genre=genre,
-        example_poem1=EXAMPLE_POEM_1["content"],
-        example_prompt1=EXAMPLE_POEM_1["prompt"],
-        example_poem2=EXAMPLE_POEM_2["content"],
-        example_prompt2=EXAMPLE_POEM_2["prompt"],
+        example_poem1=config["example_poems"]["example_1"]["content"],
+        example_prompt1=config["example_poems"]["example_1"]["prompt"],
+        example_poem2=config["example_poems"]["example_2"]["content"],
+        example_prompt2=config["example_poems"]["example_2"]["prompt"],
         author=poem["author"],
         title=poem["title"],
         poem=poem_text,

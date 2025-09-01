@@ -2,7 +2,7 @@
 Generates a writing prompt based on a randomly selected poem. 
 
 # How does this work? 
-Gets a) a random poem from poems.db or b) the poem of the day from the Poetry Foundation, and then generates a prompt for a writing exercise with openAI. 
+Gets a random poem and then generates a prompt for a writing exercise with openAI. 
 
 # Example
 
